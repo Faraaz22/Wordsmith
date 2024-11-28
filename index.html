@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Processing</title>
+</head>
+<body>
+    <h1>Text Processing with Summarization, Grammar, and Spelling Correction</h1>
+
+    <textarea id="inputText" rows="10" cols="50" placeholder="Enter text here..."></textarea><br><br>
+
+    <!-- Buttons for each functionality -->
+     <!-- NOTE AT THE TIME BEING THE SUGGESTIONS BUTTON DOES NOT DISPLAY THE RESLUT IN THE BOX -->
+    <button onclick="processSpelling()">Fix Spelling</button>
+    <button onclick="processSummarization()">Summarize Text</button>
+    <button onclick="processGrammar()">Fix Grammar</button>
+    <button onclick="processSuggestions()">Get Suggestions</button>
+
+<!-- DON'T NEED THESE --- USED ONLY FOR TESTING -->
+    <h2>Results</h2>
+    <div>
+        <strong>Spelling Corrected:</strong>
+        <p id="spellingCorrected"></p>
+    </div>
+    <div>
+        <strong>Summarized Text:</strong>
+        <p id="summarizedText"></p>
+    </div>
+    <div>
+        <strong>Grammar Corrected:</strong>
+        <p id="grammarCorrected"></p>
+    </div>
+<!-- TILL HERE -->
+ <!-- REMOVE THE SUGGESTION ONE AFTER CHANGING THE OUTPUT LOCATION TO THE SUGGESTIONS BOX -->
+    <div>
+        <strong>Suggestions Providedx:</strong>
+        <p id="suggestionProvided"></p>
+    </div>
+
+    <!-- JUST ONE CHANGE NEEDED IN SCRIPT TAG GO TO -->
+
+    <script>
+        async function processSpelling() {
+            const inputText = document.getElementById("inputText").value;
+            const response = await fetch("http://127.0.0.1:5000/process_spelling", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ text: inputText })
+            });
+
+            const data = await response.json();
+       
+            document.getElementById("inputText").value = data.spelling_corrected;
+        }
+
+  
+        async function processSummarization() {
+            const inputText = document.getElementById("inputText").value;
+            const response = await fetch("http://127.0.0.1:5000/process_summarization", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ text: inputText })
+            });
+
+            const data = await response.json();
+     
+            document.getElementById("inputText").value = data.summarized;
+        }
+
+        async function processGrammar() {
+            const inputText = document.getElementById("inputText").value;
+            const response = await fetch("http://127.0.0.1:5000/process_grammar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ text: inputText })
+            });
+
+            const data = await response.json();
+
+            document.getElementById("inputText").value = data.grammar_corrected;
+        }
+
+async function processSuggestions() {
+    const inputText = document.getElementById("inputText").value;
+
+    const response = await fetch("http://127.0.0.1:5000/process_suggestions", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ text: inputText })
+    });
+
+    const data = await response.json();
+    if (data.suggestions) {
+        // HERE JUST CHANGE TO document.getElementById(ID OF THE TEXT BOX).value = data.suggestions
+        document.getElementById("suggestionProvided").innerText = data.suggestions;
+    } else {
+        document.getElementById("suggestionProvided").innerText = "No suggestions available.";
+    }
+}
+
+
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,6 @@
+flask==2.3.2
+transformers==4.39.2
+happytransformer==1.1.1
+google-generativeai==0.7.0
+
+# Call pip install -r requirements.txt
