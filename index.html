@@ -3,112 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
     <title>Text Processing</title>
+    <style>
+.typewriter {
+    overflow: hidden; 
+    white-space: nowrap; 
+    border-right: 2px solid black; 
+    animation: typing 3s steps(20, end), blink-caret 0.5s step-end infinite;
+  }
+
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  @keyframes blink-caret {
+    from {
+      border-color: transparent;
+    }
+    to {
+      border-color: black;
+    }
+  }
+        /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #212226;
+    color: #333;
+}
+h1{
+    background-color: #432E54;
+    font-family: 'Allura', cursive;
+}
+/* Header */
+header {
+    background-color: #2a3b42;
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+/* Navbar */
+.navbar {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    background-color: #2a3b42;
+}
+
+.navbar li {
+    position: relative;
+}
+
+.navbar a {
+    display: block;
+    padding: 1rem 2rem;
+    color: white;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.navbar a:hover {
+    background-color: #3B1C32;
+}
+
+/* Dropdown */
+.dropdown-menu {
+    list-style: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #432E54;
+    display: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #432E54;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu li a {
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+}
+
+/* Main Section */
+main {
+    padding: 2rem;
+    text-align: center;
+}
+
+textarea {
+    width: 90%;
+    max-width: 600px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    align-items: center;
+}
+.output-container{
+    width: 90%;
+    max-width: 600px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    align-items: center;
+    margin-top: 2%;
+    margin-left: 29%;
+}
+
+button {
+    padding: 0.7rem 1.5rem;
+    margin: 0.5rem;
+    font-size: 1rem;
+    color: white;
+    background-color: #432E54;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #2a3b42;
+}
+
+/* Footer */
+footer {
+    background-color: #445a4d;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 2rem;
+}
+
+    </style>
 </head>
 <body>
-    <h1>Text Processing with Summarization, Grammar, and Spelling Correction</h1>
+    <header>
+        <nav>
+            <ul class="navbar">
+                <li><a href="#home">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Features</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" onclick="processSpelling()">Fix Spelling</a></li>
+                        <li><a href="#" onclick="processSummarization()">Summarize Text</a></li>
+                        <li><a href="#" onclick="processGrammar()">Fix Grammar</a></li>
+                        <li><a href="#" onclick="processSuggestions()">Get Suggestions</a></li>
+                    </ul>
+                </li>
+                <li><a href="#about">About Us</a></li>
+            </ul>
+        </nav>
+        <h1>WordSmith</h1>
+        <h2>Write Faster, Write Better</h2>
+    </header>
 
-    <textarea id="inputText" rows="10" cols="50" placeholder="Enter text here..."></textarea><br><br>
-
-    <!-- Buttons for each functionality -->
-     <!-- NOTE AT THE TIME BEING THE SUGGESTIONS BUTTON DOES NOT DISPLAY THE RESLUT IN THE BOX -->
-    <button onclick="processSpelling()">Fix Spelling</button>
-    <button onclick="processSummarization()">Summarize Text</button>
-    <button onclick="processGrammar()">Fix Grammar</button>
-    <button onclick="processSuggestions()">Get Suggestions</button>
-
-<!-- DON'T NEED THESE --- USED ONLY FOR TESTING -->
-    <h2>Results</h2>
-    <div>
-        <strong>Spelling Corrected:</strong>
-        <p id="spellingCorrected"></p>
-    </div>
-    <div>
-        <strong>Summarized Text:</strong>
-        <p id="summarizedText"></p>
-    </div>
-    <div>
-        <strong>Grammar Corrected:</strong>
-        <p id="grammarCorrected"></p>
-    </div>
-<!-- TILL HERE -->
- <!-- REMOVE THE SUGGESTION ONE AFTER CHANGING THE OUTPUT LOCATION TO THE SUGGESTIONS BOX -->
-    <div>
-        <strong>Suggestions Providedx:</strong>
-        <p id="suggestionProvided"></p>
-    </div>
-
-    <!-- JUST ONE CHANGE NEEDED IN SCRIPT TAG GO TO -->
+    <main>
+        <section id="home">
+            <textarea id="inputText" rows="10" cols="50" placeholder="Enter text here..."></textarea><br><br>
+            <button onclick="processSpelling()">Fix Spelling</button>
+            <button onclick="processSummarization()">Summarize Text</button>
+            <button onclick="processGrammar()">Fix Grammar</button>
+            <button onclick="processSuggestions()">Get Suggestions</button>
+        </section>
+        <section>
+            <div class="output-container">
+                <textarea id="outputBox" rows="8" cols="40" readonly>Here are your Suggestions. You can copy this text.</textarea>
+                <button class="copy-btn" onclick="copyToClipboard()">Copy</button>
+            </div>
+        </section>
+    </main>
+    <div id="welcomeDialog" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
+        <div style="background: #222327; color: white;  margin: 15% auto; padding: 20px; width: 300px; text-align: center; border-radius: 10px;">
+          <h2 class="typewriter">Welcome to Word Smith</h2>
+          <p style="color: #b8520a; font-weight: bold;">Write Faster, Write Better</p>
+          <button onclick="closeDialog()">Close</button>
+        </div>
+      </div>
+      
 
     <script>
+        const baseUrl = "http://127.0.0.1:5000"; // Ensure Flask runs on this endpoint
+          // Display the welcome dialog on page load
+          window.onload = function() {
+          document.getElementById('welcomeDialog').style.display = 'block';
+        };
+    
+        // Function to close the welcome dialog
+        function closeDialog() {
+          document.getElementById('welcomeDialog').style.display = 'none';
+        }  
+
         async function processSpelling() {
             const inputText = document.getElementById("inputText").value;
-            const response = await fetch("http://127.0.0.1:5000/process_spelling", {
+            const response = await fetch(`${baseUrl}/process_spelling`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ text: inputText })
             });
-
             const data = await response.json();
-       
-            document.getElementById("inputText").value = data.spelling_corrected;
+            document.getElementById("inputText").value = data.spelling_corrected || "No correction available.";
         }
 
-  
         async function processSummarization() {
             const inputText = document.getElementById("inputText").value;
-            const response = await fetch("http://127.0.0.1:5000/process_summarization", {
+            const response = await fetch(`${baseUrl}/process_summarization`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ text: inputText })
             });
-
             const data = await response.json();
-     
-            document.getElementById("inputText").value = data.summarized;
+            document.getElementById("inputText").value = data.summarized || "No summary available.";
         }
 
         async function processGrammar() {
             const inputText = document.getElementById("inputText").value;
-            const response = await fetch("http://127.0.0.1:5000/process_grammar", {
+            const response = await fetch(`${baseUrl}/process_grammar`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ text: inputText })
             });
-
             const data = await response.json();
-
-            document.getElementById("inputText").value = data.grammar_corrected;
+            document.getElementById("inputText").value = data.grammar_corrected || "No grammar correction available.";
         }
 
-async function processSuggestions() {
-    const inputText = document.getElementById("inputText").value;
+        async function processSuggestions() {
+            const inputText = document.getElementById("inputText").value;
+            const response = await fetch(`${baseUrl}/process_suggestions`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ text: inputText })
+            });
+            const data = await response.json();
+            document.getElementById("outputBox").value = data.suggestions || "No suggestions available.";
+        }
+        function copyToClipboard() {
+    var outputBox = document.getElementById("outputBox");
+    outputBox.select();
+    outputBox.setSelectionRange(0, 99999); // For mobile devices
 
-    const response = await fetch("http://127.0.0.1:5000/process_suggestions", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ text: inputText })
-    });
-
-    const data = await response.json();
-    if (data.suggestions) {
-        // HERE JUST CHANGE TO document.getElementById(ID OF THE TEXT BOX).value = data.suggestions
-        document.getElementById("suggestionProvided").innerText = data.suggestions;
-    } else {
-        document.getElementById("suggestionProvided").innerText = "No suggestions available.";
+    try {
+        document.execCommand("copy");
+        alert("Copied to clipboard!");
+    } catch (err) {
+        alert("Unable to copy text.");
     }
 }
 
-
     </script>
 </body>
+<footer>
+    
+    <p>&copy; 2024 Text Processing | Write Faster, Write Better</p>
+</footer>
 </html>
-
