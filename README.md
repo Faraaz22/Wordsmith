@@ -1,4 +1,4 @@
-# Text Processing API Documentation
+# Wordsmith Documentation
 
 ## Overview
 The Text Processing API is designed to provide multiple features for text enhancement, including spelling correction, text summarization, grammar correction, and suggestions to improve written content. This API leverages advanced models like T5, Falcon, and Google Gemini for natural language processing tasks. The front-end interface allows users to input text and receive processed results through simple HTTP POST requests.
@@ -6,7 +6,7 @@ The Text Processing API is designed to provide multiple features for text enhanc
 ## Running the Application
 
 ### Requirements:
-- Python 3.10
+- Python 3.10 or above
 - Install required packages:
   ```bash
   pip install flask transformers happytransformer google-generativeai
@@ -18,10 +18,12 @@ The Text Processing API is designed to provide multiple features for text enhanc
 2. **Configure Google API**: Make sure to set up your Google API key in the script. Replace the placeholder in `genai.configure(api_key="YOUR_API_KEY")`.
 3. **Run the Application**:
    In your terminal, navigate to the project folder and run:
+   
    ```bash
-   python app.py
+   flask run
    ```
-4. **Access the Application**: Open a web browser and go to `http://127.0.0.1:5000/`. You will be able to interact with the interface and test the text processing features.
+   
+5. **Access the Application**: Open a web browser and go to [http://127.0.0.1:5000/](http://127.0.0.1:5000/). You will be able to interact with the interface and test the text processing features.
 
 ---
 
